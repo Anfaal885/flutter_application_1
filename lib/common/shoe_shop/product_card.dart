@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-
   final String name;
   final String price;
   final String image;
@@ -17,82 +16,91 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: onTap,
-
       child: Column(
-        crossAxisAlignment:
-            CrossAxisAlignment.start,
-
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          // ================= IMAGE =================
-
           Expanded(
             child: Container(
-              width: double.infinity,
-
               decoration: BoxDecoration(
-                color: const Color(0xffF5F5F5),
-
-                borderRadius:
-                    BorderRadius.circular(16),
+                color: const Color(0xFFF5F5F5),
+                borderRadius: BorderRadius.circular(18),
               ),
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(18),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                        loadingBuilder:
+                            (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
 
-              child: ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(16),
-
-                child: Image.network(
-                  image,
-
-                  fit: BoxFit.cover,
-
-                  errorBuilder:
-                      (context, error, stackTrace) {
-
-                    return const Center(
-                      child: Icon(
-                        Icons
-                            .shopping_bag_outlined,
-                        size: 60,
-                        color: Colors.grey,
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                            child: Icon(
+                              Icons.image_not_supported_outlined,
+                              size: 40,
+                              color: Colors.grey,
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      height: 36,
+                      width: 36,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.favorite_border,
+                        size: 21,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
 
           const SizedBox(height: 8),
 
-          // ================= NAME =================
-
           Text(
             name,
-
             maxLines: 1,
-
-            overflow:
-                TextOverflow.ellipsis,
-
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ),
 
           const SizedBox(height: 4),
 
-          // ================= PRICE =================
-
           Text(
             price,
-
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 17,
               fontWeight: FontWeight.bold,
             ),
           ),

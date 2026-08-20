@@ -2,128 +2,166 @@ import 'package:flutter/material.dart';
 import 'product_card.dart';
 import 'product_details_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
-  final List<Map<String, String>> products = const [
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int selectedCategory = 0;
+  int selectedBottom = 0;
+
+  final List<String> categories = [
+    'All',
+    'Nike',
+    'Adidas',
+    'Puma',
+    'Jordan',
+  ];
+
+  final List<Map<String, String>> products = [
     {
       'name': 'Nike Air Max',
       'price': '\$120',
+      'brand': 'Nike',
       'image':
           'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800',
     },
     {
       'name': 'Nike Air Force',
       'price': '\$100',
+      'brand': 'Nike',
       'image':
-          'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800',
+          'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=800',
     },
     {
       'name': 'Nike Running',
       'price': '\$110',
+      'brand': 'Nike',
       'image':
-          'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800',
+          'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800',
     },
     {
       'name': 'Nike Casual',
       'price': '\$95',
+      'brand': 'Nike',
       'image':
-          'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=800',
+          'https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?w=800',
     },
   ];
+
+  List<Map<String, String>> get filteredProducts {
+    if (selectedCategory == 0) {
+      return products;
+    }
+
+    final brand = categories[selectedCategory];
+
+    return products
+        .where((product) => product['brand'] == brand)
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
       body: SafeArea(
         child: Column(
           children: [
-
-            // ================= HEADER =================
+            // ---------------- HEADER ----------------
 
             Padding(
               padding: const EdgeInsets.fromLTRB(
+                35,
                 20,
-                20,
-                20,
-                10,
+                35,
+                0,
               ),
               child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
                 children: [
-
-                  Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: const [
-
-                      Text(
-                        'Hi Dhina',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey,
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Hi Dhina',
+                          style: TextStyle(
+                            color: Color(0xFF999999),
+                            fontSize: 14,
+                          ),
                         ),
-                      ),
 
-                      SizedBox(height: 4),
+                        SizedBox(height: 6),
 
-                      Text(
-                        'Good Morning!',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          'Good Morning!',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
 
-                  const CircleAvatar(
-                    radius: 21,
-                    backgroundImage: NetworkImage(
-                      'https://i.pravatar.cc/150?img=47',
+                  Container(
+                    height: 54,
+                    width: 54,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFEAEAEA),
+                    ),
+                    child: const Icon(
+                      Icons.person,
+                      size: 30,
+                      color: Colors.grey,
                     ),
                   ),
                 ],
               ),
             ),
 
-            // ================= SEARCH BAR =================
+            // ---------------- SEARCH ----------------
 
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
+              padding: const EdgeInsets.fromLTRB(
+                35,
+                22,
+                35,
+                0,
               ),
               child: Row(
                 children: [
-
                   Expanded(
                     child: Container(
-                      height: 48,
-                      padding:
-                          const EdgeInsets.symmetric(
-                        horizontal: 15,
-                      ),
+                      height: 62,
                       decoration: BoxDecoration(
-                        color: const Color(0xffF5F5F5),
+                        color: const Color(0xFFF5F5F5),
                         borderRadius:
-                            BorderRadius.circular(12),
+                            BorderRadius.circular(16),
                       ),
                       child: const Row(
                         children: [
+                          SizedBox(width: 18),
 
                           Icon(
                             Icons.search,
+                            size: 30,
                             color: Colors.grey,
                           ),
 
-                          SizedBox(width: 10),
+                          SizedBox(width: 14),
 
                           Text(
                             'Search',
                             style: TextStyle(
                               color: Colors.grey,
+                              fontSize: 17,
                             ),
                           ),
                         ],
@@ -131,96 +169,121 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 14),
 
                   Container(
-                    height: 48,
-                    width: 48,
+                    height: 62,
+                    width: 62,
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius:
-                          BorderRadius.circular(12),
+                          BorderRadius.circular(16),
                     ),
                     child: const Icon(
                       Icons.tune,
                       color: Colors.white,
+                      size: 28,
                     ),
                   ),
                 ],
               ),
             ),
 
-            // ================= CATEGORIES =================
+            // ---------------- CATEGORIES ----------------
 
             SizedBox(
-              height: 48,
-              child: ListView(
+              height: 82,
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                padding:
-                    const EdgeInsets.symmetric(
-                  horizontal: 20,
+                padding: const EdgeInsets.fromLTRB(
+                  35,
+                  17,
+                  35,
+                  10,
                 ),
-                children: [
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  final isSelected =
+                      selectedCategory == index;
 
-                  categoryButton(
-                    'All',
-                    true,
-                  ),
-
-                  categoryButton(
-                    'Nike',
-                    false,
-                  ),
-
-                  categoryButton(
-                    'Adidas',
-                    false,
-                  ),
-
-                  categoryButton(
-                    'Puma',
-                    false,
-                  ),
-
-                  categoryButton(
-                    'Jordan',
-                    false,
-                  ),
-                ],
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(right: 12),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedCategory = index;
+                        });
+                      },
+                      child: Container(
+                        padding:
+                            const EdgeInsets.symmetric(
+                          horizontal: 25,
+                        ),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? Colors.black
+                              : Colors.white,
+                          borderRadius:
+                              BorderRadius.circular(30),
+                          border: Border.all(
+                            color: isSelected
+                                ? Colors.black
+                                : const Color(0xFFE0E0E0),
+                          ),
+                        ),
+                        child: Text(
+                          categories[index],
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.normal,
+                            color: isSelected
+                                ? Colors.white
+                                : const Color(0xFF999999),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
 
-            const SizedBox(height: 5),
-
-            // ================= PRODUCT GRID =================
+            // ---------------- PRODUCT GRID ----------------
 
             Expanded(
               child: GridView.builder(
-                padding: const EdgeInsets.all(20),
-                itemCount: products.length,
+                padding: const EdgeInsets.fromLTRB(
+                  35,
+                  5,
+                  35,
+                  20,
+                ),
+                itemCount: filteredProducts.length,
                 gridDelegate:
                     const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 15,
+                  crossAxisSpacing: 22,
                   mainAxisSpacing: 20,
-                  childAspectRatio: 0.68,
+                  childAspectRatio: 0.70,
                 ),
                 itemBuilder: (context, index) {
-
-                  final product = products[index];
+                  final product =
+                      filteredProducts[index];
 
                   return ProductCard(
                     name: product['name']!,
                     price: product['price']!,
                     image: product['image']!,
-
                     onTap: () {
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ProductDetailsScreen(
+                              ProductDetailScreen(
                             name: product['name']!,
                             price: product['price']!,
                             image: product['image']!,
@@ -236,92 +299,60 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
 
-      // ================= BOTTOM NAVIGATION =================
+      // ---------------- BOTTOM NAVIGATION ----------------
 
       bottomNavigationBar:
           BottomNavigationBar(
-        currentIndex: 0,
-        type: BottomNavigationBarType.fixed,
+        currentIndex: selectedBottom,
 
-        selectedItemColor: Colors.orange,
+        onTap: (index) {
+          setState(() {
+            selectedBottom = index;
+          });
+        },
 
-        unselectedItemColor: Colors.grey,
+        type:
+            BottomNavigationBarType.fixed,
+
+        backgroundColor: Colors.white,
+
+        selectedItemColor:
+            const Color(0xFFE4A522),
+
+        unselectedItemColor:
+            const Color(0xFFB8B8B8),
 
         items: const [
-
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-            ),
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
             label: 'Home',
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.shopping_bag_outlined,
-            ),
+            icon:
+                Icon(Icons.shopping_bag_outlined),
+            activeIcon:
+                Icon(Icons.shopping_bag),
             label: 'Shop',
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.shopping_cart_outlined,
-            ),
+            icon:
+                Icon(Icons.shopping_cart_outlined),
+            activeIcon:
+                Icon(Icons.shopping_cart),
             label: 'Cart',
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline,
-            ),
+            icon:
+                Icon(Icons.person_outline),
+            activeIcon:
+                Icon(Icons.person),
             label: 'Profile',
           ),
         ],
-      ),
-    );
-  }
-
-  // ================= CATEGORY BUTTON =================
-
-  Widget categoryButton(
-    String title,
-    bool selected,
-  ) {
-    return Container(
-      margin:
-          const EdgeInsets.only(right: 10),
-
-      padding:
-          const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-      ),
-
-      decoration: BoxDecoration(
-        color: selected
-            ? Colors.black
-            : Colors.white,
-
-        borderRadius:
-            BorderRadius.circular(20),
-
-        border: Border.all(
-          color: Colors.grey.shade300,
-        ),
-      ),
-
-      child: Text(
-        title,
-        style: TextStyle(
-          color: selected
-              ? Colors.white
-              : Colors.grey,
-
-          fontWeight:
-              selected
-                  ? FontWeight.bold
-                  : FontWeight.normal,
-        ),
       ),
     );
   }
