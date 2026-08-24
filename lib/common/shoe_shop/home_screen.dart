@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'product_card.dart';
 import 'product_details_screen.dart';
+import 'cart_screen.dart';
+import 'shop_screen.dart';
+import 'profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,10 +13,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedCategory = 0;
-  int selectedBottom = 0;
+  int selectedBrand = 0;
 
-  final List<String> categories = [
+  final List<String> brands = [
     'All',
     'Nike',
     'Adidas',
@@ -21,338 +23,535 @@ class _HomeScreenState extends State<HomeScreen> {
     'Jordan',
   ];
 
-  final List<Map<String, String>> products = [
+  final List<Map<String, dynamic>> products = [
     {
       'name': 'Nike Air Max',
-      'price': '\$120',
+      'price': 120.0,
       'brand': 'Nike',
       'image':
-          'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800',
+          'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700',
+      'rating': 4.5,
+      'reviews': 12,
     },
     {
       'name': 'Nike Air Force',
-      'price': '\$100',
+      'price': 100.0,
       'brand': 'Nike',
       'image':
-          'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=800',
+          'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=700',
+      'rating': 4.5,
+      'reviews': 15,
     },
     {
       'name': 'Nike Running',
-      'price': '\$110',
+      'price': 110.0,
       'brand': 'Nike',
       'image':
-          'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=800',
+          'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=700',
+      'rating': 4.4,
+      'reviews': 10,
     },
     {
       'name': 'Nike Casual',
-      'price': '\$95',
+      'price': 95.0,
       'brand': 'Nike',
       'image':
-          'https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?w=800',
+          'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=700',
+      'rating': 4.3,
+      'reviews': 9,
     },
   ];
 
-  List<Map<String, String>> get filteredProducts {
-    if (selectedCategory == 0) {
-      return products;
-    }
-
-    final brand = categories[selectedCategory];
-
-    return products
-        .where((product) => product['brand'] == brand)
-        .toList();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final filteredProducts = selectedBrand == 0
+        ? products
+        : products
+            .where(
+              (product) =>
+                  product['brand'] == brands[selectedBrand],
+            )
+            .toList();
+
     return Scaffold(
       backgroundColor: Colors.white,
 
       body: SafeArea(
         child: Column(
           children: [
-            // ---------------- HEADER ----------------
+            // ================= MAIN CONTENT =================
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                35,
-                20,
-                35,
-                0,
-              ),
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start,
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(
+                  20,
+                  16,
+                  20,
+                  20,
+                ),
+
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+
+                  children: [
+                    // ================= HEADER =================
+
+                    Row(
                       children: [
-                        Text(
-                          'Hi Dhina',
-                          style: TextStyle(
-                            color: Color(0xFF999999),
-                            fontSize: 14,
+                        const Column(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+
+                          children: [
+                            Text(
+                              'Hi Sara',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 13,
+                              ),
+                            ),
+
+                            SizedBox(height: 5),
+
+                            Text(
+                              'Good Morning!',
+                              style: TextStyle(
+                                fontSize: 23,
+                                fontWeight:
+                                    FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const Spacer(),
+
+                        const CircleAvatar(
+                          radius: 23,
+                          
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // ================= SEARCH =================
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 55,
+
+                            decoration: BoxDecoration(
+                              color:
+                                  const Color(0xFFF4F4F4),
+
+                              borderRadius:
+                                  BorderRadius.circular(
+                                16,
+                              ),
+                            ),
+
+                            child: const TextField(
+                              decoration:
+                                  InputDecoration(
+                                hintText: 'Search',
+
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  size: 28,
+                                ),
+
+                                border:
+                                    InputBorder.none,
+
+                                contentPadding:
+                                    EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
 
-                        SizedBox(height: 6),
+                        const SizedBox(width: 12),
 
-                        Text(
-                          'Good Morning!',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          height: 55,
+                          width: 55,
+
+                          decoration:
+                              BoxDecoration(
+                            color: Colors.black,
+
+                            borderRadius:
+                                BorderRadius.circular(
+                              16,
+                            ),
+                          ),
+
+                          child: const Icon(
+                            Icons.tune,
+                            color: Colors.white,
+                            size: 25,
                           ),
                         ),
                       ],
                     ),
-                  ),
 
-                  Container(
-                    height: 54,
-                    width: 54,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFEAEAEA),
-                    ),
-                    child: const Icon(
-                      Icons.person,
-                      size: 30,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                    const SizedBox(height: 16),
 
-            // ---------------- SEARCH ----------------
+                    // ================= BRANDS =================
 
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                35,
-                22,
-                35,
-                0,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 62,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF5F5F5),
-                        borderRadius:
-                            BorderRadius.circular(16),
+                    SizedBox(
+                      height: 48,
+
+                      child: ListView.builder(
+                        scrollDirection:
+                            Axis.horizontal,
+
+                        itemCount: brands.length,
+
+                        itemBuilder:
+                            (context, index) {
+                          final bool isSelected =
+                              selectedBrand == index;
+
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedBrand = index;
+                              });
+                            },
+
+                            child:
+                                AnimatedContainer(
+                              duration:
+                                  const Duration(
+                                milliseconds: 200,
+                              ),
+
+                              margin:
+                                  const EdgeInsets.only(
+                                right: 10,
+                              ),
+
+                              padding:
+                                  const EdgeInsets
+                                      .symmetric(
+                                horizontal: 24,
+                              ),
+
+                              alignment:
+                                  Alignment.center,
+
+                              decoration:
+                                  BoxDecoration(
+                                color: isSelected
+                                    ? Colors.black
+                                    : Colors.white,
+
+                                borderRadius:
+                                    BorderRadius.circular(
+                                  25,
+                                ),
+
+                                border: Border.all(
+                                  color: isSelected
+                                      ? Colors.black
+                                      : Colors.grey
+                                          .shade300,
+                                ),
+                              ),
+
+                              child: Text(
+                                brands[index],
+
+                                style: TextStyle(
+                                  color: isSelected
+                                      ? Colors.white
+                                      : Colors.grey,
+
+                                  fontWeight:
+                                      FontWeight.w600,
+
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                      child: const Row(
-                        children: [
-                          SizedBox(width: 18),
+                    ),
 
-                          Icon(
-                            Icons.search,
-                            size: 30,
-                            color: Colors.grey,
+                    const SizedBox(height: 22),
+
+                    // ================= SECTION TITLE =================
+
+                    Row(
+                      children: [
+                        const Text(
+                          'Popular Shoes',
+
+                          style: TextStyle(
+                            fontSize: 21,
+                            fontWeight:
+                                FontWeight.w800,
                           ),
+                        ),
 
-                          SizedBox(width: 14),
+                        const Spacer(),
 
-                          Text(
-                            'Search',
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    const ShopScreen(),
+                              ),
+                            );
+                          },
+
+                          child: const Text(
+                            'See All',
+
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 17,
+                              color:
+                                  Color(0xFFE5A51A),
+
+                              fontWeight:
+                                  FontWeight.w700,
                             ),
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // ================= PRODUCTS =================
+
+                    GridView.builder(
+                      shrinkWrap: true,
+
+                      physics:
+                          const NeverScrollableScrollPhysics(),
+
+                      itemCount:
+                          filteredProducts.length,
+
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+
+                        crossAxisSpacing: 14,
+
+                        mainAxisSpacing: 18,
+
+                        childAspectRatio: .66,
                       ),
-                    ),
-                  ),
 
-                  const SizedBox(width: 14),
+                      itemBuilder:
+                          (context, index) {
+                        final product =
+                            filteredProducts[index];
 
-                  Container(
-                    height: 62,
-                    width: 62,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius:
-                          BorderRadius.circular(16),
+                        return ProductCard(
+                          name: product['name'],
+                          price: product['price'],
+                          image: product['image'],
+
+                          onTap: () {
+                            Navigator.push(
+                              context,
+
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    ProductDetailScreen(
+                                  name:
+                                      product['name'],
+
+                                  price:
+                                      product['price'],
+
+                                  image:
+                                      product['image'],
+
+                                  rating:
+                                      product['rating'],
+
+                                  reviews:
+                                      product['reviews'],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                     ),
-                    child: const Icon(
-                      Icons.tune,
-                      color: Colors.white,
-                      size: 28,
-                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // ================= BOTTOM NAVIGATION =================
+
+            Container(
+              padding: const EdgeInsets.only(
+                top: 8,
+                bottom: 8,
+              ),
+
+              decoration: BoxDecoration(
+                color: Colors.white,
+
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        Colors.grey.withOpacity(.12),
+
+                    blurRadius: 12,
+
+                    offset:
+                        const Offset(0, -3),
                   ),
                 ],
               ),
-            ),
 
-            // ---------------- CATEGORIES ----------------
+              child: Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceAround,
 
-            SizedBox(
-              height: 82,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.fromLTRB(
-                  35,
-                  17,
-                  35,
-                  10,
-                ),
-                itemCount: categories.length,
-                itemBuilder: (context, index) {
-                  final isSelected =
-                      selectedCategory == index;
+                children: [
+                  // HOME
+                  _navItem(
+                    Icons.home_rounded,
+                    'Home',
+                    true,
 
-                  return Padding(
-                    padding:
-                        const EdgeInsets.only(right: 12),
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedCategory = index;
-                        });
-                      },
-                      child: Container(
-                        padding:
-                            const EdgeInsets.symmetric(
-                          horizontal: 25,
-                        ),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? Colors.black
-                              : Colors.white,
-                          borderRadius:
-                              BorderRadius.circular(30),
-                          border: Border.all(
-                            color: isSelected
-                                ? Colors.black
-                                : const Color(0xFFE0E0E0),
-                          ),
-                        ),
-                        child: Text(
-                          categories[index],
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: isSelected
-                                ? FontWeight.w600
-                                : FontWeight.normal,
-                            color: isSelected
-                                ? Colors.white
-                                : const Color(0xFF999999),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+                    () {},
+                  ),
 
-            // ---------------- PRODUCT GRID ----------------
+                  // SHOP
+                  _navItem(
+                    Icons.shopping_bag_outlined,
+                    'Shop',
+                    false,
 
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.fromLTRB(
-                  35,
-                  5,
-                  35,
-                  20,
-                ),
-                itemCount: filteredProducts.length,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 22,
-                  mainAxisSpacing: 20,
-                  childAspectRatio: 0.70,
-                ),
-                itemBuilder: (context, index) {
-                  final product =
-                      filteredProducts[index];
-
-                  return ProductCard(
-                    name: product['name']!,
-                    price: product['price']!,
-                    image: product['image']!,
-                    onTap: () {
+                    () {
                       Navigator.push(
                         context,
+
                         MaterialPageRoute(
-                          builder: (context) =>
-                              ProductDetailScreen(
-                            name: product['name']!,
-                            price: product['price']!,
-                            image: product['image']!,
-                          ),
+                          builder: (_) =>
+                              const ShopScreen(),
                         ),
                       );
                     },
-                  );
-                },
+                  ),
+
+                  // CART
+                  _navItem(
+                    Icons.shopping_cart_outlined,
+                    'Cart',
+                    false,
+
+                    () {
+                      Navigator.push(
+                        context,
+
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              const CartScreen(),
+                        ),
+                      );
+                    },
+                  ),
+
+                  // PROFILE
+                  _navItem(
+                    Icons.person_outline,
+                    'Profile',
+                    false,
+
+                    () {
+                      Navigator.push(
+                        context,
+
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              const ProfileScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
 
-      // ---------------- BOTTOM NAVIGATION ----------------
+  // ================= NAVIGATION ITEM =================
 
-      bottomNavigationBar:
-          BottomNavigationBar(
-        currentIndex: selectedBottom,
+  Widget _navItem(
+    IconData icon,
+    String label,
+    bool selected,
+    VoidCallback onTap,
+  ) {
+    return InkWell(
+      onTap: onTap,
 
-        onTap: (index) {
-          setState(() {
-            selectedBottom = index;
-          });
-        },
+      borderRadius:
+          BorderRadius.circular(15),
 
-        type:
-            BottomNavigationBarType.fixed,
+      child: Padding(
+        padding:
+            const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 4,
+        ),
 
-        backgroundColor: Colors.white,
+        child: Column(
+          mainAxisSize:
+              MainAxisSize.min,
 
-        selectedItemColor:
-            const Color(0xFFE4A522),
+          children: [
+            Icon(
+              icon,
 
-        unselectedItemColor:
-            const Color(0xFFB8B8B8),
+              color: selected
+                  ? const Color(0xFFE5A51A)
+                  : Colors.grey,
 
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
+              size: 27,
+            ),
 
-          BottomNavigationBarItem(
-            icon:
-                Icon(Icons.shopping_bag_outlined),
-            activeIcon:
-                Icon(Icons.shopping_bag),
-            label: 'Shop',
-          ),
+            const SizedBox(height: 3),
 
-          BottomNavigationBarItem(
-            icon:
-                Icon(Icons.shopping_cart_outlined),
-            activeIcon:
-                Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
+            Text(
+              label,
 
-          BottomNavigationBarItem(
-            icon:
-                Icon(Icons.person_outline),
-            activeIcon:
-                Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+              style: TextStyle(
+                color: selected
+                    ? const Color(0xFFE5A51A)
+                    : Colors.grey,
+
+                fontSize: 11,
+
+                fontWeight: selected
+                    ? FontWeight.w700
+                    : FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

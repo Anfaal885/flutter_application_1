@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
+
   final String name;
-  final String price;
+  final double price;
   final String image;
   final VoidCallback onTap;
 
@@ -16,65 +17,76 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+
+    return InkWell(
       onTap: onTap,
+
+      borderRadius:
+          BorderRadius.circular(18),
+
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
+
         children: [
+
           Expanded(
             child: Container(
+              width: double.infinity,
+
               decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
-                borderRadius: BorderRadius.circular(18),
+                color: const Color(0xFFF3F3F3),
+
+                borderRadius:
+                    BorderRadius.circular(18),
               ),
+
+              clipBehavior:
+                  Clip.antiAlias,
+
               child: Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(18),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                        loadingBuilder:
-                            (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
 
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                            ),
-                          );
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Icon(
-                              Icons.image_not_supported_outlined,
-                              size: 40,
-                              color: Colors.grey,
-                            ),
-                          );
-                        },
-                      ),
+                  Positioned.fill(
+                    child: Image.network(
+                      image,
+
+                      fit: BoxFit.cover,
+
+                      errorBuilder:
+                          (_, __, ___) {
+
+                        return const Center(
+                          child: Icon(
+                            Icons
+                                .image_not_supported_outlined,
+
+                            size: 40,
+
+                            color: Colors.grey,
+                          ),
+                        );
+                      },
                     ),
                   ),
 
                   Positioned(
                     top: 10,
                     right: 10,
+
                     child: Container(
-                      height: 36,
-                      width: 36,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
+                      width: 32,
+                      height: 32,
+
+                      decoration:
+                          const BoxDecoration(
+                        color: Colors.white70,
                         shape: BoxShape.circle,
                       ),
+
                       child: const Icon(
                         Icons.favorite_border,
-                        size: 21,
+                        size: 19,
                       ),
                     ),
                   ),
@@ -87,21 +99,26 @@ class ProductCard extends StatelessWidget {
 
           Text(
             name,
+
             maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+
+            overflow:
+                TextOverflow.ellipsis,
+
             style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
             ),
           ),
 
           const SizedBox(height: 4),
 
           Text(
-            price,
+            '\$${price.toStringAsFixed(0)}',
+
             style: const TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              fontWeight: FontWeight.w800,
             ),
           ),
         ],
