@@ -107,10 +107,21 @@ class _EmployeeListScreenState
             child: DropdownButtonFormField<String>(
               value: selectedDepartment,
 
-              decoration: const InputDecoration(
-                labelText: 'Department',
-                border: OutlineInputBorder(),
-              ),
+              decoration: InputDecoration(
+  hintText: 'Search employee',
+  prefixIcon: const Icon(Icons.search),
+  suffixIcon: searchText.isNotEmpty
+      ? IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            setState(() {
+              searchText = '';
+            });
+          },
+        )
+      : null,
+  border: const OutlineInputBorder(),
+),
 
               items: const [
                 DropdownMenuItem(
