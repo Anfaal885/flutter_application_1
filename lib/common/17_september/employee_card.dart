@@ -29,8 +29,8 @@ class EmployeeCard extends StatelessWidget {
         ),
 
         subtitle: Text(
-          '${employee.designation}\n${employee.department}',
-        ),
+  '${employee.designation}\n${employee.department}\n${employee.email}',
+),
 
         isThreeLine: true,
 
