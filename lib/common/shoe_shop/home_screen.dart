@@ -411,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 boxShadow: [
                   BoxShadow(
                     color:
-                        Colors.grey.withOpacity(.12),
+                        Colors.grey.withValues(alpha: .12),
 
                     blurRadius: 12,
 

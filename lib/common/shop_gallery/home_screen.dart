@@ -9,489 +9,405 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedCategory = 0;
+  int selectedBottom = 0;
 
-  final List<String> categories = [
-    'All',
-    'Nike',
-    'Adidas',
-    'Puma',
-    'Jordan',
+  final List<Product> products = [
+    Product(
+      name: 'iPhone 12',
+      price: '\$765.00',
+      images: [
+        'https://images.unsplash.com/photo-1603921326210-6edd2d60ca68?w=800',
+        'https://images.unsplash.com/photo-1592286927505-2fd9f0b5f5d6?w=800',
+      ],
+    ),
+
+    Product(
+      name: 'Hoodi Yellow',
+      price: '\$69.00',
+      images: [
+        'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=800',
+        'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=800',
+        'https://images.unsplash.com/photo-1578681994506-b8f463449011?w=800',
+      ],
+    ),
+
+    Product(
+      name: 'Apple Watch 6',
+      price: '\$395.00',
+      images: [
+        'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800',
+        'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800',
+      ],
+    ),
+
+    Product(
+      name: 'Men Shoes',
+      price: '\$450.00',
+      images: [
+        'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800',
+        'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800',
+      ],
+    ),
+
+    Product(
+      name: 'Summer T-Shirt',
+      price: '\$45.00',
+      images: [
+        'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800',
+        'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800',
+      ],
+    ),
+
+    Product(
+      name: 'Perfume',
+      price: '\$89.00',
+      images: [
+        'https://images.unsplash.com/photo-1541643600914-78b084683601?w=800',
+        'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=800',
+      ],
+    ),
+
+    Product(
+      name: 'Sneakers',
+      price: '\$120.00',
+      images: [
+        'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=800',
+        'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800',
+      ],
+    ),
+
+    Product(
+      name: 'Backpack',
+      price: '\$59.00',
+      images: [
+        'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800',
+        'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=800',
+      ],
+    ),
   ];
 
-  final List<Map<String, dynamic>> products = [
-    {
-      'name': 'Nike Air Max',
-      'price': 120.0,
-      'image':
-          'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800',
-      'rating': 4.5,
-      'reviews': 12,
-    },
-    {
-      'name': 'Nike Air Force',
-      'price': 100.0,
-      'image':
-          'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=800',
-      'rating': 4.5,
-      'reviews': 15,
-    },
-    {
-      'name': 'Nike Running',
-      'price': 110.0,
-      'image':
-          'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800',
-      'rating': 4.4,
-      'reviews': 10,
-    },
-    {
-      'name': 'Nike Casual',
-      'price': 95.0,
-      'image':
-          'https://images.unsplash.com/photo-1552346154-21d32810aba3?w=800',
-      'rating': 4.5,
-      'reviews': 18,
-    },
-  ];
+  void openProduct(Product product) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetailScreen(
+          product: product,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xfff9f8fa),
 
       body: SafeArea(
         child: Column(
           children: [
 
-            // ================= MAIN CONTENT =================
+            // TOP HEADER
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                18,
+                20,
+                18,
+                10,
+              ),
+              child: Row(
+                children: [
 
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-
-                  // ================= HEADER =================
-
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        20,
-                        20,
-                        20,
-                        0,
-                      ),
-                      child: Row(
-                        children: [
-
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              children: const [
-
-                                Text(
-                                  'Hi Dhina',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
-                                ),
-
-                                SizedBox(height: 5),
-
-                                Text(
-                                  'Good Morning!',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          const CircleAvatar(
-                            radius: 25,
-                            backgroundImage: NetworkImage(
-                              'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200',
-                            ),
-                          ),
-                        ],
+                  const Expanded(
+                    child: Text(
+                      'Online Shop',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
 
-                  // ================= SEARCH =================
-
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-
-                      child: Row(
-                        children: [
-
-                          Expanded(
-                            child: Container(
-                              height: 55,
-
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF5F5F5),
-                                borderRadius:
-                                    BorderRadius.circular(16),
-                              ),
-
-                              child: const TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Search',
-                                  prefixIcon: Icon(
-                                    Icons.search,
-                                    size: 28,
-                                  ),
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          const SizedBox(width: 12),
-
-                          Container(
-                            height: 55,
-                            width: 55,
-
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius:
-                                  BorderRadius.circular(16),
-                            ),
-
-                            child: const Icon(
-                              Icons.tune,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.search,
+                      size: 27,
                     ),
                   ),
 
-                  // ================= CATEGORIES =================
-
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 50,
-
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding:
-                            const EdgeInsets.symmetric(
-                          horizontal: 20,
+                  Stack(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.mark_email_unread_outlined,
+                          size: 25,
                         ),
-
-                        itemCount: categories.length,
-
-                        itemBuilder: (context, index) {
-
-                          final selected =
-                              selectedCategory == index;
-
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedCategory = index;
-                              });
-                            },
-
-                            child: Container(
-                              margin:
-                                  const EdgeInsets.only(
-                                right: 12,
-                              ),
-
-                              padding:
-                                  const EdgeInsets.symmetric(
-                                horizontal: 25,
-                              ),
-
-                              alignment: Alignment.center,
-
-                              decoration: BoxDecoration(
-                                color: selected
-                                    ? Colors.black
-                                    : Colors.white,
-
-                                borderRadius:
-                                    BorderRadius.circular(25),
-
-                                border: Border.all(
-                                  color: selected
-                                      ? Colors.black
-                                      : Colors.grey.shade300,
-                                ),
-                              ),
-
-                              child: Text(
-                                categories[index],
-
-                                style: TextStyle(
-                                  color: selected
-                                      ? Colors.white
-                                      : Colors.grey,
-
-                                  fontWeight:
-                                      FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
                       ),
-                    ),
+                      Positioned(
+                        right: 7,
+                        top: 5,
+                        child: Container(
+                          width: 9,
+                          height: 9,
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
 
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 20),
-                  ),
-
-                  // ================= PRODUCTS =================
-
-                  SliverPadding(
-                    padding:
-                        const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
-
-                    sliver: SliverGrid(
-                      delegate:
-                          SliverChildBuilderDelegate(
-                        (context, index) {
-
-                          final product =
-                              products[index];
-
-                          return GestureDetector(
-                            onTap: () {
-
-                              Navigator.push(
-                                context,
-
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      ProductDetailsScreen(
-                                    name:
-                                        product['name'],
-                                    price:
-                                        product['price'],
-                                    image:
-                                        product['image'],
-                                    rating:
-                                        product['rating'],
-                                    reviews:
-                                        product['reviews'],
-                                  ),
-                                ),
-                              );
-                            },
-
-                            child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-
-                              children: [
-
-                                Expanded(
-                                  child: Container(
-                                    width:
-                                        double.infinity,
-
-                                    decoration:
-                                        BoxDecoration(
-                                      color:
-                                          const Color(
-                                        0xFFF3F3F3,
-                                      ),
-
-                                      borderRadius:
-                                          BorderRadius
-                                              .circular(
-                                        20,
-                                      ),
-                                    ),
-
-                                    clipBehavior:
-                                        Clip.antiAlias,
-
-                                    child: Stack(
-                                      children: [
-
-                                        Positioned.fill(
-                                          child:
-                                              Image.network(
-                                            product['image'],
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-
-                                        Positioned(
-                                          top: 10,
-                                          right: 10,
-
-                                          child:
-                                              Container(
-                                            width: 34,
-                                            height: 34,
-
-                                            decoration:
-                                                const BoxDecoration(
-                                              color:
-                                                  Colors.white,
-                                              shape:
-                                                  BoxShape.circle,
-                                            ),
-
-                                            child:
-                                                const Icon(
-                                              Icons
-                                                  .favorite_border,
-                                              size: 19,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                const SizedBox(height: 8),
-
-                                Text(
-                                  product['name'],
-
-                                  maxLines: 1,
-
-                                  overflow:
-                                      TextOverflow.ellipsis,
-
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight:
-                                        FontWeight.bold,
-                                  ),
-                                ),
-
-                                const SizedBox(height: 3),
-
-                                Text(
-                                  '\$${product['price'].toStringAsFixed(0)}',
-
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight:
-                                        FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-
-                        childCount: products.length,
+                  Stack(
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.notifications_none,
+                          size: 27,
+                        ),
                       ),
-
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 14,
-                        mainAxisSpacing: 20,
-                        childAspectRatio: 0.70,
+                      Positioned(
+                        right: 7,
+                        top: 5,
+                        child: Container(
+                          width: 9,
+                          height: 9,
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 25),
+                    ],
                   ),
                 ],
               ),
             ),
 
-            // ================= BOTTOM NAVIGATION =================
-
-            Container(
-              height: 75,
-
-              decoration: BoxDecoration(
-                color: Colors.white,
-
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.15),
-                    blurRadius: 12,
-                    offset: const Offset(0, -3),
-                  ),
-                ],
+            // RECOMMENDATION
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                18,
+                8,
+                18,
+                12,
               ),
-
               child: Row(
                 mainAxisAlignment:
-                    MainAxisAlignment.spaceAround,
-
+                    MainAxisAlignment.spaceBetween,
                 children: [
 
-                  _bottomItem(
-                    Icons.home_rounded,
-                    'Home',
-                    true,
+                  const Text(
+                    'Recommendation',
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
 
-                  _bottomItem(
-                    Icons.shopping_bag_outlined,
-                    'Cart List',
-                    false,
-                  ),
-
-                  _bottomItem(
-                    Icons.settings_outlined,
-                    'Setting',
-                    false,
+                  Icon(
+                    Icons.grid_view_rounded,
+                    color: Colors.grey.shade500,
                   ),
                 ],
               ),
+            ),
+
+            // PRODUCT GRID
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 5,
+                ),
+                itemCount: products.length,
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.72,
+                ),
+                itemBuilder: (context, index) {
+
+                  final product = products[index];
+
+                  return GestureDetector(
+                    onTap: () {
+                      openProduct(product);
+                    },
+                    child: ProductCard(
+                      product: product,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+
+      // BOTTOM NAVIGATION
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.05),
+              blurRadius: 10,
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          currentIndex: selectedBottom,
+          onTap: (index) {
+            setState(() {
+              selectedBottom = index;
+            });
+          },
+          backgroundColor: Colors.white,
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          selectedFontSize: 11,
+          unselectedFontSize: 11,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag_outlined),
+              label: 'Cart list',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings_outlined),
+              label: 'Setting',
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _bottomItem(
-    IconData icon,
-    String title,
-    bool selected,
-  ) {
+
+// PRODUCT CARD
+class ProductCard extends StatelessWidget {
+  final Product product;
+
+  const ProductCard({
+    super.key,
+    required this.product,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        Icon(
-          icon,
-          size: 26,
-          color: selected
-              ? const Color(0xFFFFA000)
-              : Colors.grey,
+        // IMAGE BOX
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: const Color(0xfff0eef2),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Stack(
+              children: [
+
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Image.network(
+                      product.images.first,
+                      fit: BoxFit.contain,
+                      errorBuilder:
+                          (context, error, stackTrace) {
+                        return const Icon(
+                          Icons.image_not_supported,
+                          size: 45,
+                          color: Colors.grey,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+
+                // HEART
+                const Positioned(
+                  top: 10,
+                  right: 10,
+                  child: Icon(
+                    Icons.favorite_border,
+                    size: 22,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 8),
+
+        // NAME
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 3,
+          ),
+          child: Text(
+            product.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
 
         const SizedBox(height: 4),
 
-        Text(
-          title,
+        // PRICE + BUY
+        Row(
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+          children: [
 
-          style: TextStyle(
-            fontSize: 12,
-            color: selected
-                ? const Color(0xFFFFA000)
-                : Colors.grey,
-          ),
+            Text(
+              product.price,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Color(0xffa88a62),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: const Text(
+                'Buy',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
