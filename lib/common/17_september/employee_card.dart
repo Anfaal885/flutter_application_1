@@ -20,14 +20,12 @@ class EmployeeCard extends StatelessWidget {
         leading: CircleAvatar(
           child: Text(employee.name[0]),
         ),
-
         title: Text(
           employee.name,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,18 +39,25 @@ class EmployeeCard extends StatelessWidget {
               ),
             ),
 
-            Text(employee.department),
+            Row(
+              children: [
+                const Icon(
+                  Icons.business,
+                  size: 16,
+                ),
+                const SizedBox(width: 5),
+                Text(employee.department),
+              ],
+            ),
+
             Text(employee.email),
           ],
         ),
-
         isThreeLine: true,
-
         trailing: const Icon(
           Icons.arrow_forward_ios,
           size: 18,
         ),
-
         onTap: () {
           Navigator.push(
             context,
