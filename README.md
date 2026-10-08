@@ -1,17 +1,56 @@
-# flutter_application_1
+# Employee Management App
 
-A new Flutter project.
+A Flutter application for managing and viewing employee information.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Employee directory
+- Employee details screen
+- Search employees by name
+- Filter employees by department
+- Clear search option
+- Employee email display
+- Clean and simple Flutter UI
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- Flutter
+- Dart
+- Git
+- GitHub
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Project Structure
+
+- employee.dart - Employee model
+- employee_list.dart - Employee list, search and department filter
+- employee_card.dart - Employee card UI
+- employee_details_screen.dart - Employee details screen
+
+## How to Run
+
+Install Flutter dependencies:
+
+flutter pub get
+
+Run the application:
+
+flutter run
+
+Analyze the project:
+
+flutter analyze
+
+Format the code:
+
+flutter format lib
+
+## Git Workflow
+
+- main - stable branch
+- develop - development branch
+- feature/search-employees - feature development branch
+
+## Author
+
+Anfaal Shahid
+BS IT Student
