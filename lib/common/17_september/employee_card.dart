@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'employee.dart';
 import 'employee_details_screen.dart';
 
@@ -18,7 +19,6 @@ class EmployeeCard extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           child: Text(employee.name[0]),
-      
         ),
 
         title: Text(
@@ -28,9 +28,23 @@ class EmployeeCard extends StatelessWidget {
           ),
         ),
 
-        subtitle: Text(
-  '${employee.designation}\n${employee.department}\n${employee.email}',
-),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 5),
+
+            Chip(
+              label: Text(employee.designation),
+              avatar: const Icon(
+                Icons.work,
+                size: 18,
+              ),
+            ),
+
+            Text(employee.department),
+            Text(employee.email),
+          ],
+        ),
 
         isThreeLine: true,
 
